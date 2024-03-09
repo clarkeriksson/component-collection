@@ -1,11 +1,15 @@
 'use client'
 
-import PanelMagnet from "./_components/PanelMagnet";
+import ComponentDisplay from "./_private_components/ComponentDisplay";
+
+import { PanelMagnet, PanelMagnetTSX } from "./_components/PanelMagnet";
 
 export default function Home() {
     return (
         <main className='flex flex-wrap w-full h-full m-0 p-0 justify-center content-center'>
-            <PanelMagnet maxLift={200} className={`w-[400px] h-[400px]`} style={{border: '2px solid', borderRadius: '50px', backgroundImage: 'url("./hbonds1.png")'}}/>
+            <ComponentDisplay code={PanelMagnetTSX}>
+                <PanelMagnet maxLift={50} className={`w-[400px] h-[400px]`} style={{border: '1px solid blue', borderRadius: '0.5rem', backgroundImage: 'url("./hbonds1.png")'}}/>
+            </ComponentDisplay>
         </main>
     );
 }
