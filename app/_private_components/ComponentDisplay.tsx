@@ -14,6 +14,8 @@ hljs.registerLanguage('typescript', typescript);
 
 export default function ComponentDisplay({ children, code } : { children: React.ReactNode, code: string }) {
 
+    const compRef = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
         hljs.highlightAll();
     }, []);
@@ -25,13 +27,12 @@ export default function ComponentDisplay({ children, code } : { children: React.
     }
 
     return (
-        <div className={`flex flex-col ${(isFocused) ? 'w-[90%]' : 'w-[20%]'} h-max gap-2 m-0 p-0 justify-center items-center duration-300`} onClick={onClick}>
-            <div className='z-50'>{ children }</div>
-            <div className={`relative w-full h-max duration-300`}>
-                <div className={`absolute left-0 top-0 ${(isFocused) ? 'w-[100%] bg-opacity-0' : 'w-[20%] bg-opacity-100 aspect-square'} duration-500 bg-gray-300 z-10 pointer-events-none`}></div>
-                <div className={`absolute left-0 top-0 ${(isFocused) ? 'w-[100%] overflow-y-scroll' : 'w-[20%] overflow-y-hidden aspect-square'} duration-500`}>
-                    <pre><code className={`text-xs`}>{ code }</code></pre>
-                </div>
+        <div className={`grid max-w-full max-h-full m-4 p-0`} onClick={onClick}>
+            <div className={`col-start-1 row-start-1 ${(isFocused) ? `opacity-0` : 'opacity-100'} w-max h-max box-border z-50 duration-150`} ref={compRef}>
+                { children }
+            </div>
+            <div className={`col-start-1 row-start-1 ${(isFocused) ? 'h-full w-full opacity-100' : `w-[${compRef.current?.clientWidth}px] h-[${compRef.current?.clientHeight}px] opacity-0`} text-xs overflow-hidden duration-300`}>
+                <pre><code>{ code }</code></pre>
             </div>
         </div>
     )
